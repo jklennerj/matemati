@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css" href="jsxgraph.css"/>
+    <style>
+        .graphbox {
+            width: 100%;
+            height: 0;
+            padding-bottom: 50%;
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="jxgbox graphbox"></div>
+
+
+
+<script type="text/javascript">
+    //JXG.Options.renderer = 'canvas';
+
+	
+	 board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 30, -10], axis:false, showCopyright:false,showNavigation:false, showReload:false});
+
+
+// ejes sin numeros para board1
+
+// var xaxis = board.create('axis', [[0, 0], [1, 0]], {ticks: {drawLabels: false}, lastArrow: false});
+// var yaxis = board.create('axis', [[0, 0], [0, 1]], {ticks: {drawLabels: false}, lastArrow: false});
+
+
+// ejes  para board2
+
+
+
+
+
+
+// DESLIZADOR PARA LA LONGITUD DE LOS ESPEJOS
+var r = board.create('slider', [[15, 80], [28, 80], [0, 1.5, 4]], {visible:true, name:'', color:'black'});
+
+
+
+// RECTA QUE SOPORTA LOS FOCOS
+lifp1 = board.create('point',[-10,8],{visible:false,fixed:1});
+lifp2 = board.create('point',[10,8],{visible:false, fixed:1});
+lif = board.create('segment',[lifp1,lifp2], {straightFirst:true, straightLast:true, strokeWidth:2, dash:2, highlight: false});
+
+// SEPARADOR DE VENTANAS (recta vertical negra)
+sep = board.create('perpendicular',[lif,lifp2],{highlight: false, strokeColor: 'black', visible:1});
+
+pun_sep = board.create('point',[10,0],{visible:0});
+pun_sep2 = board.create('point',[100,0],{visible:0});
+
+
+sep2 = board.create('segment',[pun_sep,pun_sep2],{ highlight: false, strokeColor: 'black', visible:1,fixed:1});
+
+
+// 6 FOCOS SOBRE LA RECTA
+f1 = board.create('point',[-8,function(){return lifp1.Y()}], {highlight: false,strokeColor:'#000000',fillColor:'#FFFFFF', name:'',showInfobox:false});
+f2 = board.create('point',[-5,function(){return lifp1.Y()}], {highlight: false, name:'',strokeColor:'#000000',fillColor:'#FFFFFF',showInfobox:false});
+f3 = board.create('point',[-2,function(){return lifp1.Y()}], {highlight: false, name:'',strokeColor:'#000000',fillColor:'#FFFFFF',showInfobox:false});
+f4 = board.create('point',[2,function(){return lifp1.Y()}], {highlight: false, name:'',strokeColor:'#000000',fillColor:'#FFFFFF',showInfobox:false});
+f5 = board.create('point',[5,function(){return lifp1.Y()}], {highlight: false, name:'',strokeColor:'#000000',fillColor:'#FFFFFF',showInfobox:false});
+f6 = board.create('point',[8,function(){return lifp1.Y()}], {highlight: false, name:'',strokeColor:'#000000',fillColor:'#FFFFFF',showInfobox:false});
+
+
+// TITERES (punto rojo en el origen)
+px = board.create('point', [0, 0], {highlight: false, face:'o', size:2, highlight: false, visible: true, color: 'red', name:'', fixed: true, showInfobox:false} );
+
+
+
+// CONTROL DE ROTACION DEL ESPEJO MOVIL
+
+centro = board.create('point',[25,-5],{visible:0});
+circr = board.create('circle', [centro, 4],{highlight: false,visible:0,  fixed:1});
+//circr2 = board.create('circle', [centro, 3.4],{highlight: false,strokecolor:'grey',fillcolor:'white', fixed:1});
+circr3 = board.create('circle', [centro, 4.6],{highlight: false,strokecolor:'grey',fillcolor:'#CECBCB', fixed:1});
+punhoriz = board.create('point',[function(){return centro.X()+2;},function(){return centro.Y();}],{visible:0});
+vol = board.create('glider',[circr],{highlight: false, name:'', color:'grey',size:8,showInfobox:false});
+angv = board.create('angle',[punhoriz,centro,vol],{visible:0});
+
+
+// CONTROL DE TRASLACION DEL ESPEJO MOVIL
+
+// t_horiz = board.create('slider', [[12, -9], [28, -9], [0, 1.5, 4]], {visible:true, name:'', color:'black', fixed:1});
+
+
+// circ_h = board.create('perpendicular',[lif,centro],{highlight: false, strokeColor: 'black', visible:1});
+// circ_v = board.create('perpendicular',[circ_h,centro],{highlight: false, strokeColor: 'black', visible:1});
+
+
+// INICIO ESPEJO MOVIL QUE INDICARÁ POSICION
+cen100 = board.create('point', [-2, -4], {highlight: false, face:'o', size:2, highlight: false, visible:1, color: 'blue', name:'', fixed: false, showInfobox:false} );
+cen101 = board.create('point', [function(){return cen100.X()+r.Value();},function(){return cen100.Y();}], {highlight: false, face:'o', size:2, highlight: false, visible: false, color: 'blue', name:'', fixed: false, showInfobox:false} );
+
+s2 = board.create('slider', [[15,100],[28,100],[0.25*Math.PI,-0.35,-0.25*Math.PI]],{name:''});
+t = board.create('transform', [function(){return angv.Value();}, cen100], {type:'rotate'});
+t2 = board.create('transform', [function(){return angv.Value()+Math.PI;}, cen100], {type:'rotate'});
+
+
+cen102 = board.create('point', [cen101,t], {highlight: false, face:'o', size:2, highlight: false, visible:0, color: 'blue', name:'', fixed: false, showInfobox:false});
+seg = board.create('segment',[cen100,cen102],{highlight: false, withLabel:true, name:'', strokeWidth: 6, color: 'black'});
+
+cen103 = board.create('point', [cen101,t2], {trace:false, highlight: false, face:'o', size:2, highlight: false, visible: 0, color: 'blue', name:'', fixed: false, showInfobox:false});
+seg2 = board.create('segment',[cen100,cen103],{highlight: false, withLabel:true, name:'', strokeWidth: 6, color: 'black'});
+
+// 6.-  Crear punto en la linea de los focos
+punesplif = board.create('point', [function(){return cen100.X()},function(){return lifp1.Y()} ], {highlight: false, size:1.5,Color:'black', strokeColor:'#000000',fillColor:'#FFFFFF', name:'', showInfobox:false});
+
+
+// 7.-
+foco_esp = board.create('segment',[punesplif,cen100],{highlight: false, withLabel:true, name:'', strokeWidth: 2, color: 'blue', lastArrow: true});
+
+// 8.-
+perp = board.create('perpendicular',[seg,cen100],{strokeColor: 'red', visible: false});
+
+// 9.-
+rp = board.create('reflection', [punesplif, perp],{visible:false});
+
+// 10.-
+l = board.create('segment', [cen100, px ],{visible:false});
+
+
+// 11.-
+foco_px = board.create('line',[cen100,rp],{visible:false, straightFirst:false, straightLast:true, highlight: false, withLabel:true, name:function(){ return l.L();}, strokeWidth: 6, color: 'yellow'});
+
+
+// 12.-
+circc = board.create('circle', [cen100, function(){ return l.L(); }], {highlight: false, strokeWidth: 2, name:'', strokecolor: 'grey', visible:false}  );
+
+// 13.-
+i = board.create('intersection', [circc, foco_px, 0],{visible:false, name:''});
+
+// 14.-
+vector = board.create('segment',[cen100,i], {lastArrow: true, highlight: false});
+
+
+e = board.create('text',[17.5,8.5,function(){return +(foco_esp.L()+l.L()).toFixed(2);}],{fontSize:33,fixed:true,highlight: false});
+
+// FIN ESPEJO
+
+
+
+// INICIO CONTROL MOVER ESPEJO (gpad)
+
+
+	// Create a button element at position
+ var button_up = board.create('button', [function(){return centro.X()-10},function(){return centro.Y()+2.7}, '&#8593;', function() {
+     cen100.moveTo([cen100.X(), cen100.Y() + 0.1], 100);
+ }], {fixed:true});
+
+
+  var button_down = board.create('button', [function(){return centro.X()-10}, function(){return centro.Y()-2.7}, '&#8595;', function() {
+     cen100.moveTo([cen100.X(), cen100.Y() - 0.1], 100);
+ }], {fixed:true});
+
+
+   var button_izq = board.create('button', [function(){return centro.X()-13}, function(){return centro.Y()}, '&#8592;', function() {
+     cen100.moveTo([cen100.X() - 0.1, cen100.Y()], 100);
+ }], {fixed:true});
+
+
+    var button_der = board.create('button', [function(){return centro.X()-7}, function(){return centro.Y()}, '&#8594;', function() {
+     cen100.moveTo([cen100.X() + 0.1, cen100.Y()], 100);
+ }], {fixed:true});
+
+
+// padh = board.create('segment',[[function(){return button_izq.X()-1.1}, function(){return button_izq.Y()}],[function(){return button_der.X()+1.9}, function(){return button_der.Y()}]],{strokeWidth:50, color:'grey', highlight:0});
+// padv = board.create('segment',[[function(){return button_up.X()+0.4}, function(){return button_up.Y()+1.8}],[function(){return button_down.X()+0.4}, function(){return button_down.Y()-1.8}]],{strokeWidth:50, color:'grey', highlight:0});
+// int_hv = board.create('intersection', [padh, padv, 0],{visible:0, name:''});
+// circ_hv = board.create('circle', [int_hv, 4.6],{highlight: false,strokecolor:'grey',fillcolor:'#CECBCB', fixed:1});
+
+
+
+ // BOTONES ROTAR ESPEJO "fino"
+
+// 	// Create a button element at position
+// var button_max = board.create('button', [function(){return centro.X()+1.5},function(){return centro.Y()}, '&#8594;', function() {
+//     vol.moveTo([vol.X() + 0.2, vol.Y()], 100);
+// }], {fixed:true});
+
+
+//  var button_min = board.create('button', [function(){return centro.X()-2}, function(){return centro.Y()}, '&#8592;', function() {
+//     vol.moveTo([vol.X() - 0.2, vol.Y() ], 100);
+// }], {fixed:true});
+
+-->
+
+
+
+	
+// FIN MOVER ESPEJO (gpad)
+
+
+// Crear marcas de espejos (12)
+
+var p0 = board.create('point',[100,100],{visible:false});
+var p1 = board.create('point',[100,100],{visible:false});
+var l0 = board.create('segment', [p0, p1]);
+
+var p2 = board.create('point',[100,100],{visible:false});
+var p3 = board.create('point',[100,100],{visible:false});
+var l2 = board.create('segment', [p2, p3]);
+
+var p4 = board.create('point',[100,100],{visible:false});
+var p5 = board.create('point',[100,100],{visible:false});
+var l4 = board.create('segment', [p4, p5]);
+
+var p6 = board.create('point',[100,100],{visible:false});
+var p7 = board.create('point',[100,100],{visible:false});
+var l6 = board.create('segment', [p6, p7]);
+
+var p8 = board.create('point',[100,100],{visible:false});
+var p9 = board.create('point',[100,100],{visible:false});
+var l8 = board.create('segment', [p8, p9]);
+
+var p10 = board.create('point',[100,100],{visible:false});
+var p11 = board.create('point',[100,100],{visible:false});
+var l10 = board.create('segment', [p10, p11]);
+
+var p12 = board.create('point',[100,100],{visible:false});
+var p13 = board.create('point',[100,100],{visible:false});
+var l12 = board.create('segment', [p12, p13]);
+
+var p14 = board.create('point',[100,100],{visible:false});
+var p15 = board.create('point',[100,100],{visible:false});
+var l14 = board.create('segment', [p14, p15]);
+
+var p16 = board.create('point',[100,100],{visible:false});
+var p17 = board.create('point',[100,100],{visible:false});
+var l16 = board.create('segment', [p16, p17]);
+
+var p18 = board.create('point',[100,100],{visible:false});
+var p19 = board.create('point',[100,100],{visible:false});
+var l18 = board.create('segment', [p18, p19]);
+
+var p20 = board.create('point',[100,100],{visible:false});
+var p21 = board.create('point',[100,100],{visible:false});
+var l20 = board.create('segment', [p20, p21]);
+
+var p22 = board.create('point',[100,100],{visible:false});
+var p23 = board.create('point',[100,100],{visible:false});
+var l22 = board.create('segment', [p22, p23]);
+
+
+
+	// Create a button element at position
+ var button_l0 = board.create('button', [11, 6.5, 'E1', function() {
+     p0.moveTo([cen102.X(), cen102.Y()], 100);
+     p1.moveTo([cen103.X(), cen103.Y()], 100);
+ }], {fixed:true});
+
+
+ 	// Create a button element at position
+ var button_l2 = board.create('button', [14, 6.5, 'E2', function() {
+     p2.moveTo([cen102.X(), cen102.Y()], 100);
+     p3.moveTo([cen103.X(), cen103.Y()], 100);
+ }], {fixed:true});
+
+  	// Create a button element at position
+ var button_l4 = board.create('button', [17, 6.5, 'E3', function() {
+     p4.moveTo([cen102.X(), cen102.Y()], 100);
+     p5.moveTo([cen103.X(), cen103.Y()], 100);
+ }], {fixed:true});
+
+
+
+ 	// Create a button element at position
+ var button_l6 = board.create('button', [21, 6.5, 'E4', function() {
+     p6.moveTo([cen102.X(), cen102.Y()], 100);
+     p7.moveTo([cen103.X(), cen103.Y()], 100);
+ }], {fixed:true});
+
+
+ 	// Create a button element at position
+ var button_l8 = board.create('button', [24, 6.5, 'E5', function() {
+     p8.moveTo([cen102.X(), cen102.Y()], 100);
+     p9.moveTo([cen103.X(), cen103.Y()], 100);
+ }], {fixed:true});
+
+  	// Create a button element at position
+ var button_l10 = board.create('button', [27, 6.5, 'E6', function() {
+     p10.moveTo([cen102.X(), cen102.Y()], 100);
+     p11.moveTo([cen103.X(), cen103.Y()], 100);
+ }], {fixed:true});
+
+
+
+		
+		
+		
+		
+		
+        var resize = function () {
+            board.resizeContainer(board.containerObj.clientWidth, board.containerObj.clientHeight, true);
+            board.fullUpdate();
+        };
+
+        window.onresize = resize;
+</script>
+</body>
+</html>
