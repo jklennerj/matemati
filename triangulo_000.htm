@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head id="Head"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Triángulo</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css"/>
+    <style>
+        .graphbox {
+            width: 50%;
+            height: 0;
+            padding-bottom: 50%;
+			float:left;
+        }
+		.graphbox2 {
+            width: 45%;
+            height: 0;
+            padding-bottom: 25%;
+			float:left;
+        }
+	    .graphbox3 {
+            width: 45%;
+            height: 0;
+            padding-bottom: 25%;
+			float:left;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div id="box" class="jxgbox graphbox"></div>
+<div id="box2" class="jxgbox graphbox2"></div>
+<div id="box3" class="jxgbox graphbox3"></div>
+
+
+
+<script type="text/javascript">
+    //JXG.Options.renderer = 'canvas';
+
+// board = JXG.JSXGraph.initBoard('box', {originX: 200, originY: 200, unitX: 40, unitY: 40,showCopyright:false,showNavigation:false});
+board = JXG.JSXGraph.initBoard('box', {boundingbox:[-6,6,8,-8],showCopyright:false,showNavigation:false});
+// board2 = JXG.JSXGraph.initBoard('box2', {originX: 100, originY: 100, unitX: 25, unitY: 25,showCopyright:false,showNavigation:false});
+board2 = JXG.JSXGraph.initBoard('box2', {boundingbox:[-4,4,12,-5],showCopyright:false,showNavigation:false});
+board3 = JXG.JSXGraph.initBoard('box3', {boundingbox:[57,30,120,-4],showCopyright:false,showNavigation:false});
+
+
+
+// crear punto A
+initPt = board.create('point',[-3,-2],{name:''});
+board.create('text',[function(){ return initPt.X()-0.4; },function(){ return initPt.Y()+0.3; },'A'],{fontSize:15});
+initPt.setProperty({fixed:true});
+
+// crear punto B
+rotPt = board.create('point',[-0.5,3],{name:''});
+board.create('text',[function(){ return rotPt.X()-0.4; },function(){ return rotPt.Y()+0.3; },'B'],{fontSize:15});
+rotPt.setProperty({fixed:true});
+
+// crear segmento entre A y B
+seg_ab = board.create('segment',[rotPt,initPt],{withLabel:false, name:''});
+
+// crear deslizador para variacion de angulo
+s1 = board.create('slider',[[-5,-6],[3,-6],[60,70,110]],
+  {snapWidth:1,name:'&nbsp;&nbsp;grados<br />'});
+  
+// deslizador para rotación de la figura completa 
+// s2 = board.create('slider',[[-3,-7],[5,-7],[57,60,120]],
+//  {snapWidth:1,name:'&nbsp;&nbsp;grados<br />'}); 
+
+
+// transformacion de unidades del deslizador "s1" a grados
+transform = board.create('transform',
+  [function(){return s1.Value()*Math.PI/180},rotPt],
+  {type:'rotate'});
+  
+// transformacion de unidades del deslizador "s2" a grados
+// transformc = board.create('transform',
+//  [function(){return s2.Value()*Math.PI/180},rotPt],
+//  {type:'rotate'})
+
+// crear punto de rotacion del punto A respecto al punto B 
+newPt = board.create('point',[initPt,transform],{name:'new',visible:false});
+
+// crear segmento entre eje de rotacion y punto de rotacion
+lg = board.create('segment',[rotPt,newPt], {visible:false});
+
+// crear punto C
+cc = board.create('glider',[3.6, 1.9, lg],{name:''});
+board.create('text',[function(){ return cc.X()+0.4; },function(){ return cc.Y(); },'C'],{fontSize:15});
+// fijar punto C 
+cc.setProperty({fixed:true});
+
+// crear segmento entre B y C
+lb = board.create('segment',[rotPt,cc],{withLabel:false, name:''});
+
+// crear segmento entre A y C
+lcc = board.create('segment',[initPt,cc]);
+
+// crear angulo ABC
+ang1 = board.create('angle',[initPt, rotPt, cc], {radius:1, fillColor:'orange', withLabel:false});
+
+// crear punto D
+perp = board.create('perpendicularpoint',[lcc,rotPt],{name:'', color:'green'});
+board.create('text',[function(){ return perp.X()+0.4; },function(){ return perp.Y()-0.1; },'D'],{fontSize:15});
+
+// crear punto medio entre A y D y retularlo "p"
+mp2 = board.create('midpoint', [initPt,perp],{name:'',visible:false});
+board.create('text',[function(){ return mp2.X(); },function(){ return mp2.Y()+0.4; },'p'],{fontSize:15});
+
+// crear segmento entre B y D
+seg_bd = board.create('segment',[rotPt,perp],{withLabel:false, name:''});
+mp4 = board.create('midpoint', [rotPt,perp],{name:'',visible:false});
+board.create('text',[function(){ return mp4.X()-0.4; },function(){ return mp4.Y(); },'h'],{fontSize:15});
+
+
+// crear segmento entre A y D
+seg_ad = board.create('segment',[initPt,perp],{withLabel:false, name:''});
+
+// crear segmento entre D y C
+seg_dc = board.create('segment',[perp,cc],{withLabel:false, name:''});
+
+// crear punto medio entre D y C y retularlo "q"
+mp3 = board.create('midpoint', [cc,perp],{name:'',visible:false});
+board.create('text',[function(){ return mp3.X()-0.2; },function(){ return mp3.Y()+0.3; },'q'],{fontSize:15});
+
+
+// Definir rotacion y crear punto rotado
+transform2 = board.create('transform',
+  [Math.PI*1.5,perp],
+  {type:'rotate'});
+newPt2 = board.create('point',[cc,transform2],{name:'',visible:false});
+
+
+// crear poligono 
+perp_ac_a = board.create('perpendicular',[lcc,initPt],
+  {straightFirst:true,straightLast:true,dash:2,visible:false});
+
+par_ac_a = board.create('parallel',[lcc,newPt2],
+  {straightFirst:true,straightLast:true,dash:2,visible:false});
+
+int = board.create('intersection', [perp_ac_a, par_ac_a, 0],{visible:false,name:''});
+
+poli1 = board.create('polygon',[initPt,int,newPt2,perp]);
+
+// crear segmento para etiquetar "q"
+mp1 = board.create('midpoint', [initPt,int],{name:'',visible:false});
+board.create('text',[function(){ return mp1.X()-0.3; },function(){ return mp1.Y()-0.1; },'q'],{fontSize:15});
+
+// crear segundo poligono
+
+transform3 = board.create('transform',
+  [Math.PI*0.5,rotPt],
+  {type:'rotate'});
+newPt3 = board.create('point',[perp,transform3],{name:'',visible:false});
+
+transform4 = board.create('transform',
+  [Math.PI*1.5,perp],
+  {type:'rotate'});
+newPt4 = board.create('point',[rotPt,transform4],{name:'',visible:false});
+
+poli2 = board.create('polygon',[rotPt,newPt3,newPt4,perp]);
+
+// crear segmento para etiquetar "h"
+mp6 = board.create('midpoint', [rotPt,newPt3],{name:'',visible:false});
+board.create('text',[function(){ return mp6.X()-0.1; },function(){ return mp6.Y()+0.3; },'h'],{fontSize:15});
+
+
+
+
+// inicio de indicadores de valores en la board 2
+
+board2.create('text',[-2,3,function(){ return 'Ángulo ABC = '+s1.Value(); }], {fixed: true,fontSize:30});
+pt_angABC = board2.create('point', [-3,3],{fixed: true, trace: false, size:2., color: 'orange', name: ''});
+
+board2.create('text',[-2,1,function(){ return 'p = '+initPt.Dist(perp).toFixed(2); }],{fixed: true,fontSize:20});
+pt_p = board2.create('point', [-3,1],{fixed: true, trace: false, size:2., color: 'blue', name: ''});
+
+board2.create('text',[-2,0,function(){ return 'q = '+initPt.Dist(int).toFixed(2); }],{fixed: true, fontSize:20});
+pt_q = board2.create('point', [-3,0],{fixed: true, trace: false, size:2., color: 'blue', name: ''});
+
+board2.create('text',[-2,-1,function(){ return 'h = '+rotPt.Dist(perp).toFixed(2); }],{fixed: true,fontSize:20});
+pt_h = board2.create('point', [-3,-1],{fixed: true, trace: false, size:2., color: 'blue', name: ''});
+
+board2.create('text',[-2,-3,function(){ 
+  area1 = initPt.Dist(perp)*initPt.Dist(int);
+  return 'p x q = '+area1.toFixed(2); }],{fixed: true, fontSize:20});
+pt_pq = board2.create('point', [-3,-3],{fixed: true, trace: false, size:2., color: 'green', name: ''});
+
+board2.create('text',[-2,-4,function(){ 
+  area2 = rotPt.Dist(perp)*rotPt.Dist(perp);
+  return 'h x h = '+area2.toFixed(2); }],{fixed: true, fontSize:20});
+pt_hh = board2.create('point', [-3,-4],{fixed: true, trace: false, size:2., color: 'green', name: ''});
+
+// fin de indicadores de valores en la board 2
+
+
+// grafica de Areas en función del angulo en la board 3
+
+
+xax3 = board3.create('axis',[[0,0], [0,1]]);
+yax3 = board3.create('axis',[[0,0],[1,0]]);
+yax32 = board3.create('axis',[[60,0],[60,1]]);
+
+// crear punto A1 = (angulo ABC, area pxq)
+pt_area1 = board3.create('point', [function(){ return s1.Value(); },function(){ return initPt.Dist(perp)*initPt.Dist(int); }], 
+             {fixed: true, trace: true,size:0.1, color: 'black', strokeColor: '#ff0000', name: 'A1'});
+// proyeccion A1 eje X
+pt_area1_X = board3.create('point', [function(){ return s1.Value(); },0], 
+             {fixed: true, trace: false, size:2., color: 'orange', strokeColor: '#ff0000', name: ''});
+// proyeccion A1 eje Y			 
+pt_area1_Y = board3.create('point', [60,function(){ return pt_area1.Y(); }], 
+             {fixed: true, trace: false, size:2., color: 'green', strokeColor: '#ff0000', name: ''});
+			 
+// crea segmento A1 al eje X
+l_A1_ejex = board3.create('segment',[pt_area1_X,pt_area1], {visible:true,strokeColor:'black', strokeWidth:0.3});
+
+// crea segmento A1 al eje Y
+l_A1_ejey = board3.create('segment',[pt_area1_Y,pt_area1], {visible:true,strokeColor:'black', strokeWidth:0.3});
+
+
+
+// crear punto A2 = (angulo ABC, area hxh)
+pt_area2 = board3.create('point', [function(){ return s1.Value(); },function(){ return rotPt.Dist(perp)*rotPt.Dist(perp); }], 
+             {fixed: true, trace: true,size:0.1 , color: 'black' , strokeColor: '#ff0000', name: 'A2'});
+			 
+// proyeccion A1 eje Y			 
+pt_area2_Y = board3.create('point', [60,function(){ return pt_area2.Y(); }], 
+             {fixed: true, trace: false, size:2., color: 'green', strokeColor: '#ff0000', name: ''});
+			 		 	
+// crea segmento A2 al eje Y
+l_A2_ejex = board3.create('segment',[pt_area1_X,pt_area2], {visible:true,strokeColor:'black', strokeWidth:0.3});		
+
+// crea segmento A2 al eje Y
+l_A2_ejey = board3.create('segment',[pt_area2_Y,pt_area2], {visible:true,strokeColor:'black', strokeWidth:0.3});
+ 
+ 
+  board.addChild(board2);
+  board.addChild(board3);
+
+
+	
+
+	
+	
+	
+	
+	
+
+
+		
+		
+		
+		
+		
+        var resize = function () {
+            board.resizeContainer(board.containerObj.clientWidth, board.containerObj.clientHeight, true);
+            board.fullUpdate();
+        };
+
+        window.onresize = resize;
+</script>
+</body>
+</html>
