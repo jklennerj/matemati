@@ -2,20 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Gráficos JSXGraph</title>
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css"
-    >
-
-    <script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades de matemática</title>
 
     <style>
         * {
@@ -24,268 +12,71 @@
 
         body {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f7fa;
+            padding: 24px 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .contenedor {
-            width: min(1200px, 100%);
-            margin: 0 auto;
+            width: min(500px, 90%);
+            background: white;
+            padding: clamp(24px, 6vw, 40px);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .12);
+            text-align: center;
         }
 
-        .panel-graficos {
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-            gap: 20px;
+        h1 {
+            margin-top: 0;
+            margin-bottom: 35px;
+            color: #1f2937;
         }
 
-        .columna-secundaria {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            gap: 20px;
+        .actividades a {
+            display: block;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 16px;
+            margin: 15px 0;
+            border-radius: 10px;
+            font-size: 1.15em;
+            transition: background .25s, transform .25s;
         }
 
-        .tarjeta {
-            min-width: 0;
-            padding: 12px;
-            background-color: white;
-            border: 1px solid #dbe2ea;
-            border-radius: 12px;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        .actividades a:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
         }
 
-        .jxgbox {
-            width: 100%;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            overflow: hidden;
+        .actividades a:focus-visible {
+            outline: 3px solid #1f2937;
+            outline-offset: 4px;
         }
 
-        #box {
-            aspect-ratio: 1 / 1;
-            height: auto;
-            min-height: 420px;
-        }
-
-        #box2,
-        #box3 {
-            aspect-ratio: 16 / 8;
-            height: auto;
-            min-height: 230px;
-        }
-
-        @media (max-width: 850px) {
-            body {
-                padding: 12px;
+        @media (prefers-reduced-motion: reduce) {
+            .actividades a {
+                transition: none;
             }
 
-            .panel-graficos {
-                grid-template-columns: 1fr;
-            }
-
-            .columna-secundaria {
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: auto;
-            }
-
-            #box {
-                min-height: 450px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 8px;
-            }
-
-            .tarjeta {
-                padding: 8px;
-            }
-
-            .columna-secundaria {
-                grid-template-columns: 1fr;
-            }
-
-            #box {
-                min-height: 400px;
-            }
-
-            #box2,
-            #box3 {
-                min-height: 280px;
+            .actividades a:hover {
+                transform: none;
             }
         }
     </style>
 </head>
-
 <body>
     <main class="contenedor">
+        <h1>Actividades de matemática</h1>
 
-        <section class="panel-graficos">
-
-            <div class="tarjeta">
-                <div id="box" class="jxgbox"></div>
-            </div>
-
-            <div class="columna-secundaria">
-
-                <div class="tarjeta">
-                    <div id="box2" class="jxgbox"></div>
-                </div>
-
-                <div class="tarjeta">
-                    <div id="box3" class="jxgbox"></div>
-                </div>
-
-            </div>
-
-        </section>
-
+        <nav class="actividades" aria-label="Actividades disponibles">
+            <!-- Agregar aquí un enlace por cada nueva actividad. -->
+            <a href="espejos.htm">Espejos</a>
+        </nav>
     </main>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const board = JXG.JSXGraph.initBoard("box", {
-                boundingbox: [-10, 10, 10, -10],
-                axis: true,
-                showCopyright: false,
-                showNavigation: false,
-                keepAspectRatio: false,
-                pan: {
-                    enabled: false
-                },
-                zoom: {
-                    enabled: false
-                }
-            });
-
-            const board2 = JXG.JSXGraph.initBoard("box2", {
-                boundingbox: [-10, 10, 10, -10],
-                axis: true,
-                showCopyright: false,
-                showNavigation: false,
-                keepAspectRatio: false,
-                pan: {
-                    enabled: false
-                },
-                zoom: {
-                    enabled: false
-                }
-            });
-
-            const board3 = JXG.JSXGraph.initBoard("box3", {
-                boundingbox: [-10, 10, 10, -10],
-                axis: true,
-                showCopyright: false,
-                showNavigation: false,
-                keepAspectRatio: false,
-                pan: {
-                    enabled: false
-                },
-                zoom: {
-                    enabled: false
-                }
-            });
-
-            const a = board.create(
-                "slider",
-                [[-7, -5], [7, -5], [-5, 1, 5]],
-                {
-                    name: "a",
-                    snapWidth: 0.1,
-                    precision: 1
-                }
-            );
-
-            const b = board.create(
-                "slider",
-                [[-7, -7], [7, -7], [0, 0, 1000]],
-                {
-                    name: "b",
-                    snapWidth: 1,
-                    precision: 0
-                }
-            );
-
-            const c = board.create(
-                "slider",
-                [[-7, -9], [7, -9], [0, 0.1, 1]],
-                {
-                    name: "c",
-                    snapWidth: 0.01,
-                    precision: 2
-                }
-            );
-
-            board.create(
-                "functiongraph",
-                [
-                    function (x) {
-                        return (
-                            Math.exp(a.Value() * x) +
-                            c.Value() * Math.sin((b.Value() / 100) * x)
-                        );
-                    }
-                ],
-                {
-                    strokeWidth: 3
-                }
-            );
-
-            board2.create(
-                "functiongraph",
-                [
-                    function (x) {
-                        return Math.exp(a.Value() * x);
-                    }
-                ],
-                {
-                    strokeWidth: 3
-                }
-            );
-
-            board3.create(
-                "functiongraph",
-                [
-                    function (x) {
-                        return (
-                            c.Value() *
-                            Math.sin((b.Value() / 100) * x)
-                        );
-                    }
-                ],
-                {
-                    strokeWidth: 3
-                }
-            );
-
-            board.addChild(board2);
-            board.addChild(board3);
-
-            function redimensionarGraficos() {
-                const cajas = [
-                    { elemento: "box", tablero: board },
-                    { elemento: "box2", tablero: board2 },
-                    { elemento: "box3", tablero: board3 }
-                ];
-
-                cajas.forEach(function (item) {
-                    const contenedor = document.getElementById(item.elemento);
-
-                    item.tablero.resizeContainer(
-                        contenedor.clientWidth,
-                        contenedor.clientHeight
-                    );
-
-                    item.tablero.fullUpdate();
-                });
-            }
-
-            window.addEventListener("resize", redimensionarGraficos);
-
-            setTimeout(redimensionarGraficos, 100);
-        });
-    </script>
 </body>
 </html>
