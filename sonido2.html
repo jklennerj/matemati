@@ -183,10 +183,10 @@ function button(x,y,label,fn){return controls.create('button',[x,y,label,fn],{fi
 
 // Precision controls: each activation changes exactly one hertz.
 function stepFrequency(slider,delta){slider.setValue(Math.max(200,Math.min(600,Math.round(slider.Value())+delta)));refresh();}
-button(0.4,10,'F₁ −1 Hz',function(){stepFrequency(F1,-1);});
-button(5,10,'F₁ +1 Hz',function(){stepFrequency(F1,1);});
-var f2Minus=button(0.4,4.3,'F₂ −1 Hz',function(){stepFrequency(F2,-1);});
-var f2Plus=button(5,4.3,'F₂ +1 Hz',function(){stepFrequency(F2,1);});
+button(0.4,10,'−',function(){stepFrequency(F1,-1);});
+button(5,10,'+',function(){stepFrequency(F1,1);});
+var f2Minus=button(0.4,4.3,'−',function(){stepFrequency(F2,-1);});
+var f2Plus=button(5,4.3,'+',function(){stepFrequency(F2,1);});
 
 button(0.4,3.5,'La suma',play);
 button(3.5,3.5,'Pausar sonidos',stop);
