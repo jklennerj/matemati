@@ -173,12 +173,12 @@ var status=document.getElementById('status');
 function text(x,y,value,color){return controls.create('text',[x,y,value],{fixed:true,fontSize:15,strokeColor:color||'#243e53',highlight:false});}
 function slider(y,range,step,color){return controls.create('slider',[[1.7,y],[8,y],range],{name:'',withLabel:false,snapWidth:step,size:5,fillColor:color,strokeColor:color,baseline:{strokeColor:'#dbe6eb',strokeWidth:4},highline:{strokeColor:color,strokeWidth:4}});}
 var a1=slider(13,[-5,1.3,5],0.1,'#006400'),F1=slider(11,[200,235,600],1,'#006400');
-text(0.4,14,function(){return 'Amplitud a₁ = '+a1.Value().toFixed(1);},'#006400');
-text(0.4,12,function(){return 'Frecuencia F₁ = '+Math.round(F1.Value())+' Hz';},'#006400');
+text(0.4,14,function(){return 'a₁ = '+a1.Value().toFixed(1);},'#006400');
+text(0.4,12,function(){return 'F₁ = '+Math.round(F1.Value())+' Hz';},'#006400');
 var checkbox=controls.create('checkbox',[5,8,'Onda roja'],{fixed:true,fontSize:16,anchorX:'middle'});
 var a2=slider(5.5,[-5,3,5],0.1,'#cc3a24'),F2=slider(3.5,[200,200,600],1,'#cc3a24');
-var redLabel1=text(0.4,6.5,function(){return 'Amplitud a₂ = '+a2.Value().toFixed(1);},'#cc3a24');
-var redLabel2=text(0.4,4.5,function(){return 'Frecuencia F₂ = '+Math.round(F2.Value())+' Hz';},'#cc3a24');
+var redLabel1=text(0.4,6.5,function(){return 'a₂ = '+a2.Value().toFixed(1);},'#cc3a24');
+var redLabel2=text(0.4,4.5,function(){return 'F₂ = '+Math.round(F2.Value())+' Hz';},'#cc3a24');
 function button(x,y,label,fn){return controls.create('button',[x,y,label,fn],{fixed:true,highlight:false,anchorY:'middle'});}
 
 function stepAmplitude(slider,delta){slider.setValue(Math.max(-5,Math.min(5,Math.round((slider.Value()+delta)*10)/10)));refresh();}
