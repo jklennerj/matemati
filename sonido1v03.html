@@ -158,7 +158,7 @@ s.renderer.updateTextStyle(a,!1),o[3]&&(i.isString(o[3])?(a._jc=new t.JessieCode
 </head>
 <body><main>
 <header><h1>Actividad: Cancelación Activa de Ruido (ANC)</h1></header>
-<div class="layout"><section class="panel"><h2 id="controls-heading">Controles de las ondas</h2><div id="controls" class="jxgbox" aria-label="Controles de la onda"></div><p class="hint" id="status" role="status" aria-live="polite" hidden></p></section>
+<div class="layout"><section class="panel"><h2>Controles de las ondas</h2><div id="controls" class="jxgbox" aria-label="Controles de la onda"></div><p class="hint" id="status" role="status" aria-live="polite" hidden></p></section>
 <section class="panel"><div id="wave" class="jxgbox" aria-label="Gráfica de la onda sonora"></div></section></div>
 
 
@@ -175,7 +175,7 @@ function slider(y,range,step,color){return controls.create('slider',[[1.7,y],[8,
 var a1=slider(13,[-5,1.3,5],0.1,'#006400'),F1=slider(11,[200,235,600],1,'#006400');
 text(0.4,14,function(){return 'A₁ = '+a1.Value().toFixed(1);},'#006400');
 text(0.4,12,function(){return 'F₁ = '+Math.round(F1.Value());},'#006400');
-var checkbox=controls.create('checkbox',[5,8,'Onda roja'],{fixed:true,fontSize:16,anchorX:'middle',visible:false});
+var checkbox=controls.create('checkbox',[5,8,'Onda roja'],{fixed:true,fontSize:16,anchorX:'middle'});
 var a2=slider(5.5,[-5,3,5],0.1,'#cc3a24'),F2=slider(3.5,[200,200,600],1,'#cc3a24');
 var redLabel1=text(0.4,6.5,function(){return 'A₂ = '+a2.Value().toFixed(1);},'#cc3a24');
 var redLabel2=text(0.4,4.5,function(){return 'F₂ = '+Math.round(F2.Value());},'#cc3a24');
@@ -195,14 +195,13 @@ var f2Plus=button(8.6,3.5,'+',function(){stepFrequency(F2,1);});
 
 button(0,9.5,'Sonido',play);
 button(2.7,9.5,'Pausar sonido',stop);
-button(7,9.5,'Reiniciar',function(){stop();a1.setValue(1.3);F1.setValue(235);a2.setValue(3);F2.setValue(200);checkbox.rendNodeCheckbox.checked=false;checkbox.setAttribute({visible:false});toggleRed();refresh();});
+button(7,9.5,'Reiniciar',function(){stop();a1.setValue(1.3);F1.setValue(235);a2.setValue(3);F2.setValue(200);checkbox.rendNodeCheckbox.checked=false;toggleRed();refresh();});
 // Original GeoGebra viewport: x≈[-17.26,11.34], y≈[-6.8,6.54].
 var wave=JXG.JSXGraph.initBoard('wave',Object.assign({},shared,{boundingbox:[-17.26,6.54,11.34,-6.8],axis:true}));
 wave.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120);}],{strokeColor:'#006400',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false});
 var redCurve=wave.create('functiongraph',[function(x){return a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#cc3a24',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:false});
 function toggleRed(){red=checkbox.Value();[a2,F2,redLabel1,redLabel2,f2Minus,f2Plus,a2Minus,a2Plus].forEach(function(e){e.setAttribute({visible:red});});redCurve.setAttribute({visible:red});refresh();}
 checkbox.rendNodeCheckbox.addEventListener('change',toggleRed);
-document.getElementById('controls-heading').addEventListener('dblclick',function(){checkbox.setAttribute({visible:true});controls.update();});
 function refresh(){controls.update();wave.update();if(osc){osc.frequency.setTargetAtTime(F1.Value(),audio.currentTime,0.025);gain.gain.setTargetAtTime(a1.Value()*0.024,audio.currentTime,0.025);}}
 [a1,F1,a2,F2].forEach(function(s){s.on('drag',refresh);});
 function stop(){clearTimeout(timer);if(osc){gain.gain.setTargetAtTime(0,audio.currentTime,0.015);osc.stop(audio.currentTime+0.08);osc=null;gain=null;}status.hidden=true;status.textContent='';}
