@@ -153,7 +153,7 @@ return r.selection="major",t.createArc(e,i,r)},t.registerElement("majorarc",t.cr
 s.renderer.updateTextStyle(a,!1),o[3]&&(i.isString(o[3])?(a._jc=new t.JessieCode,a._jc.use(s),a._handler=function(){a._jc.parse(o[3])}):a._handler=o[3]),e.addEvent(a.rendNodeButton,"click",r.ButtonClickEventHandler,a),a},t.registerElement("button",t.createButton),{createButton:t.createButton}}),define("../build/core.deps.js",["jxg","utils/env","base/constants","utils/type","utils/xml","utils/event","utils/expect","math/math","math/qdt","math/numerics","math/statistics","math/symbolic","math/geometry","math/poly","math/complex","renderer/abstract","renderer/no","reader/file","parser/geonext","base/board","options","jsxgraph","base/element","base/coords","base/point","base/line","base/group","base/circle","element/conic","base/polygon","base/curve","element/arc","element/sector","base/composition","element/composition","element/locus","base/text","base/image","element/slider","element/measure","base/chart","base/transformation","base/turtle","utils/color","base/ticks","utils/zip","utils/base64","utils/uuid","utils/encoding","server/server","parser/datasource","parser/jessiecode","utils/dump","renderer/svg","renderer/vml","renderer/canvas","renderer/no","element/slopetriangle","element/checkbox","element/input","element/button"],function(t,e){"use strict";return e.isBrowser?window.JXG=t:e.isNode()&&"object"==typeof module?module.exports=t:e.isWebWorker()&&(self.JXG=t),t}),require("../build/core.deps.js")}();
 </script>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f3f5f7;color:#172c40;font:16px system-ui,sans-serif}main{max-width:1280px;margin:auto;padding:30px 24px}header{margin-bottom:24px}.eyebrow{font-size:12px;letter-spacing:2px;color:#087e85;font-weight:750}h1{font-size:clamp(24px,3vw,34px);margin:8px 0}p{line-height:1.6;color:#526578}.layout{display:grid;grid-template-columns:340px 1fr;gap:20px}.panel{background:white;border:1px solid #dae2e9;border-radius:18px;padding:20px;overflow:hidden}h2{font-size:18px;margin:0 0 6px}.jxgbox{border:0;background:white;touch-action:none}#controls{height:500px;width:100%}#wave{height:270px;width:100%}#particles{height:150px;width:100%}.hint{font-size:13px}.badge{background:#e5f3f2;border-radius:8px;padding:10px 14px;color:#166b6c;font-size:14px;margin-top:16px}button{font:600 13px system-ui;border:1px solid #d0dce4;background:#f4f8fb;color:#183b51;border-radius:7px;padding:9px 12px;cursor:pointer}button:hover{background:#dff2f0}button:focus-visible{outline:3px solid #15a7a0}.formula{font-family:monospace;color:#087e85}.foot{font-size:12px;color:#667785;margin-top:20px}@media(max-width:800px){.layout{grid-template-columns:1fr}main{padding:20px 12px}.panel{padding:16px}#controls{height:500px}#wave{height:230px}}
+*{box-sizing:border-box}body{margin:0;background:#f3f5f7;color:#172c40;font:16px system-ui,sans-serif}main{max-width:1280px;margin:auto;padding:30px 24px}header{margin-bottom:24px}.eyebrow{font-size:12px;letter-spacing:2px;color:#087e85;font-weight:750}h1{font-size:clamp(24px,3vw,34px);margin:8px 0}p{line-height:1.6;color:#526578}.layout{display:grid;grid-template-columns:340px 1fr;gap:20px}.panel{background:white;border:1px solid #dae2e9;border-radius:18px;padding:20px;overflow:hidden}h2{font-size:18px;margin:0 0 6px}.jxgbox{border:0;background:white;touch-action:none}#controls{height:500px;width:100%}#wave{height:270px;width:100%}#particles{height:150px;width:100%}.hint{font-size:13px}.badge{background:#e5f3f2;border-radius:8px;padding:10px 14px;color:#166b6c;font-size:14px;margin-top:16px}button{font:600 13px system-ui;border:1px solid #d0dce4;background:#f4f8fb;color:#183b51;border-radius:7px;padding:9px 12px;cursor:pointer}#controls button{font-size:12px;padding:7px 6px}button:hover{background:#dff2f0}button:focus-visible{outline:3px solid #15a7a0}.formula{font-family:monospace;color:#087e85}.foot{font-size:12px;color:#667785;margin-top:20px}@media(max-width:800px){.layout{grid-template-columns:1fr}main{padding:20px 12px}.panel{padding:16px}#controls{height:500px}#wave{height:230px}}
 </style>
 </head>
 <body><main>
@@ -171,7 +171,7 @@ var controls=JXG.JSXGraph.initBoard('controls',Object.assign({},shared,{bounding
 var red=false,audio=null,osc=null,gain=null,timer=null;
 var status=document.getElementById('status');
 function text(x,y,value,color){return controls.create('text',[x,y,value],{fixed:true,fontSize:15,strokeColor:color||'#243e53',highlight:false});}
-function slider(y,range,step,color){return controls.create('slider',[[0.7,y],[8.9,y],range],{name:'',withLabel:false,snapWidth:step,size:5,fillColor:color,strokeColor:color,baseline:{strokeColor:'#dbe6eb',strokeWidth:4},highline:{strokeColor:color,strokeWidth:4}});}
+function slider(y,range,step,color){return controls.create('slider',[[1.7,y],[8,y],range],{name:'',withLabel:false,snapWidth:step,size:5,fillColor:color,strokeColor:color,baseline:{strokeColor:'#dbe6eb',strokeWidth:4},highline:{strokeColor:color,strokeWidth:4}});}
 var a1=slider(13,[-5,1.3,5],0.1,'#006400'),F1=slider(11,[200,235,600],1,'#006400');
 text(0.4,14,function(){return 'Amplitud a₁ = '+a1.Value().toFixed(1);},'#006400');
 text(0.4,12,function(){return 'Frecuencia F₁ = '+Math.round(F1.Value())+' Hz';},'#006400');
@@ -179,23 +179,28 @@ var checkbox=controls.create('checkbox',[0.4,9.5,'Onda roja'],{fixed:true,fontSi
 var a2=slider(7.3,[-5,3,5],0.1,'#cc3a24'),F2=slider(5.3,[200,200,600],1,'#cc3a24');
 var redLabel1=text(0.4,8.3,function(){return 'Amplitud a₂ = '+a2.Value().toFixed(1);},'#cc3a24');
 var redLabel2=text(0.4,6.3,function(){return 'Frecuencia F₂ = '+Math.round(F2.Value())+' Hz';},'#cc3a24');
-function button(x,y,label,fn){return controls.create('button',[x,y,label,fn],{fixed:true,highlight:false});}
+function button(x,y,label,fn){return controls.create('button',[x,y,label,fn],{fixed:true,highlight:false,anchorY:'middle'});}
 
+function stepAmplitude(slider,delta){slider.setValue(Math.max(-5,Math.min(5,Math.round((slider.Value()+delta)*10)/10)));refresh();}
+button(0,13,'−',function(){stepAmplitude(a1,-0.1);});
+button(8.6,13,'+',function(){stepAmplitude(a1,0.1);});
+var a2Minus=button(0,7.3,'−',function(){stepAmplitude(a2,-0.1);});
+var a2Plus=button(8.6,7.3,'+',function(){stepAmplitude(a2,0.1);});
 // Precision controls: each activation changes exactly one hertz.
 function stepFrequency(slider,delta){slider.setValue(Math.max(200,Math.min(600,Math.round(slider.Value())+delta)));refresh();}
-button(0.4,10,'−',function(){stepFrequency(F1,-1);});
-button(5,10,'+',function(){stepFrequency(F1,1);});
-var f2Minus=button(0.4,4.3,'−',function(){stepFrequency(F2,-1);});
-var f2Plus=button(5,4.3,'+',function(){stepFrequency(F2,1);});
+button(0,11,'−',function(){stepFrequency(F1,-1);});
+button(8.6,11,'+',function(){stepFrequency(F1,1);});
+var f2Minus=button(0,5.3,'−',function(){stepFrequency(F2,-1);});
+var f2Plus=button(8.6,5.3,'+',function(){stepFrequency(F2,1);});
 
-button(0.4,3.5,'Sonido',play);
-button(3.5,3.5,'Pausar sonido',stop);
-button(0.4,1.8,'Reiniciar',function(){stop();a1.setValue(1.3);F1.setValue(235);a2.setValue(3);F2.setValue(200);checkbox.rendNodeCheckbox.checked=false;toggleRed();refresh();});
+button(0,2.5,'Sonido',play);
+button(2.7,2.5,'Pausar sonido',stop);
+button(7,2.5,'Reiniciar',function(){stop();a1.setValue(1.3);F1.setValue(235);a2.setValue(3);F2.setValue(200);checkbox.rendNodeCheckbox.checked=false;toggleRed();refresh();});
 // Original GeoGebra viewport: x≈[-17.26,11.34], y≈[-6.8,6.54].
 var wave=JXG.JSXGraph.initBoard('wave',Object.assign({},shared,{boundingbox:[-17.26,6.54,11.34,-6.8],axis:true}));
 wave.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120);}],{strokeColor:'#006400',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false});
 var redCurve=wave.create('functiongraph',[function(x){return a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#cc3a24',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:false});
-function toggleRed(){red=checkbox.Value();[a2,F2,redLabel1,redLabel2,f2Minus,f2Plus].forEach(function(e){e.setAttribute({visible:red});});redCurve.setAttribute({visible:red});refresh();}
+function toggleRed(){red=checkbox.Value();[a2,F2,redLabel1,redLabel2,f2Minus,f2Plus,a2Minus,a2Plus].forEach(function(e){e.setAttribute({visible:red});});redCurve.setAttribute({visible:red});refresh();}
 checkbox.rendNodeCheckbox.addEventListener('change',toggleRed);
 function refresh(){controls.update();wave.update();if(osc){osc.frequency.setTargetAtTime(F1.Value(),audio.currentTime,0.025);gain.gain.setTargetAtTime(a1.Value()*0.024,audio.currentTime,0.025);}}
 [a1,F1,a2,F2].forEach(function(s){s.on('drag',refresh);});
