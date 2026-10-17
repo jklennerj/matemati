@@ -175,7 +175,7 @@ function slider(y,range,step,color){return controls.create('slider',[[1.7,y],[8,
 var a1=slider(13,[-5,1.3,5],0.1,'#006400'),F1=slider(11,[200,235,600],1,'#006400');
 text(0.4,14,function(){return 'Amplitud a₁ = '+a1.Value().toFixed(1);},'#006400');
 text(0.4,12,function(){return 'Frecuencia F₁ = '+Math.round(F1.Value())+' Hz';},'#006400');
-var checkbox=controls.create('checkbox',[0.4,9.5,'Onda roja'],{fixed:true,fontSize:16});
+var checkbox=controls.create('checkbox',[5,9.5,'Onda roja'],{fixed:true,fontSize:16,anchorX:'middle'});
 var a2=slider(7.3,[-5,3,5],0.1,'#cc3a24'),F2=slider(5.3,[200,200,600],1,'#cc3a24');
 var redLabel1=text(0.4,8.3,function(){return 'Amplitud a₂ = '+a2.Value().toFixed(1);},'#cc3a24');
 var redLabel2=text(0.4,6.3,function(){return 'Frecuencia F₂ = '+Math.round(F2.Value())+' Hz';},'#cc3a24');
