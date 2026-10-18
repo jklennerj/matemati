@@ -198,8 +198,8 @@ button(2.7,9.5,'Pausar sonido',stop);
 button(7,9.5,'Reiniciar',function(){stop();a1.setValue(2.6);F1.setValue(81);a2.setValue(0);F2.setValue(200);checkbox.rendNodeCheckbox.checked=false;checkbox.setAttribute({visible:false});toggleRed();refresh();});
 // Original GeoGebra viewport: x≈[-17.26,11.34], y≈[-6.8,6.54].
 var wave=JXG.JSXGraph.initBoard('wave',Object.assign({},shared,{boundingbox:[-14.3,6.54,14.3,-6.8],axis:{ticks:{drawLabels:false}}}));
-wave.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120);}],{strokeColor:'#006400',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false});
-var redCurve=wave.create('functiongraph',[function(x){return a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#cc3a24',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:false});
+wave.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120);}],{strokeColor:'#006400',strokeWidth:4,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false});
+var redCurve=wave.create('functiongraph',[function(x){return a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#cc3a24',strokeWidth:4,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:false});
 function toggleRed(){red=checkbox.Value();[a2,F2,redLabel1,redLabel2,f2Minus,f2Plus,a2Minus,a2Plus].forEach(function(e){e.setAttribute({visible:red});});redCurve.setAttribute({visible:red});refresh();}
 checkbox.rendNodeCheckbox.addEventListener('change',toggleRed);
 document.getElementById('controls-heading').addEventListener('dblclick',function(){checkbox.rendNodeCheckbox.checked=true;controls.update();toggleRed();});
