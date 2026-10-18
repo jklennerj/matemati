@@ -198,9 +198,9 @@ button(7,9.5,'Reiniciar',function(){stop();a1.setValue(1.3);F1.setValue(390);a2.
 // Original GeoGebra viewport: x≈[-17.26,11.34], y≈[-6.8,6.54].
 var wave=JXG.JSXGraph.initBoard('wave',Object.assign({},shared,{boundingbox:[-14.3,6.54,14.3,-6.8],axis:{ticks:{drawLabels:false}}}));
 var components=JXG.JSXGraph.initBoard('components',Object.assign({},shared,{boundingbox:[-14.3,6.54,14.3,-6.8],axis:{ticks:{drawLabels:false}}}));
-components.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120);}],{strokeColor:'#006400',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:true});
-var redCurve=components.create('functiongraph',[function(x){return a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#cc3a24',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:true});
-wave.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120)+a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#153bd0',strokeWidth:2,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false});
+components.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120);}],{strokeColor:'#006400',strokeWidth:4,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:true});
+var redCurve=components.create('functiongraph',[function(x){return a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#cc3a24',strokeWidth:4,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false,visible:true});
+wave.create('functiongraph',[function(x){return a1.Value()*Math.sin(2*Math.PI*F1.Value()*x/120)+a2.Value()*Math.sin(2*Math.PI*F2.Value()*x/120);}],{strokeColor:'#153bd0',strokeWidth:4,numberPointsHigh:10000,numberPointsLow:10000,doAdvancedPlot:false,highlight:false});
 function refresh(){controls.update();wave.update();components.update();if(osc){play();}}
 [a1,F1,a2,F2].forEach(function(s){s.on('drag',refresh);});
 var generation=0;
