@@ -168,7 +168,7 @@ s.renderer.updateTextStyle(a,!1),o[3]&&(i.isString(o[3])?(a._jc=new t.JessieCode
 <div id="circle" class="jxgbox" role="img" aria-label="Circunferencia de radio uno y triángulo con catetos a, b e hipotenusa c"></div>
 <div class="control"><label for="angle"><span style="color:#d98c0c">Ángulo</span> <output id="angle-value" for="angle"></output></label><input id="angle" type="range" min="0" max="360" step="0.1" value="40.1"></div>
 <div class="presets" aria-label="Ángulos de referencia"><button data-angle="0">0°</button><button data-angle="30">30°</button><button data-angle="45">45°</button><button data-angle="60">60°</button><button data-angle="90">90°</button><button data-angle="180">180°</button><button data-angle="270">270°</button></div>
-<div class="control" id="radius-control" hidden><label for="radius">Hipotenusa c <output id="radius-value" for="radius"></output></label><input id="radius" type="range" min="0.1" max="2" step="0.01" value="1"></div>
+<div class="control" id="radius-control" hidden><label for="radius">Hipotenusa <output id="radius-value" for="radius"></output></label><input id="radius" type="range" min="0.1" max="2" step="0.01" value="1"></div>
 <button id="reset">Reiniciar</button>
 </section>
 <div class="stack">
@@ -227,12 +227,12 @@ f.point=wave.create('point',[theta,function(){return f.fn(theta());}],{name:'',f
 check.addEventListener('change',function(){f.elements.forEach(function(e){e.setAttribute({visible:check.checked});});f.point.setAttribute({visible:check.checked&&Number.isFinite(f.fn(theta()))});wave.update();});
 });
 function format(v){return Number.isFinite(v)?clean(v).toFixed(3):'No definida';}
-function card(label,value,color){return '<div class="value"'+(label==='Hipotenusa c'?' data-radius-toggle tabindex="0" role="button" aria-controls="radius-control" aria-expanded="'+!document.getElementById('radius-control').hidden+'" aria-label="Mostrar u ocultar deslizador de hipotenusa con doble clic"':'')+'><dt'+(color?' style="color:'+color+'"':'')+'>'+label+'</dt><dd>'+value+'</dd></div>';}
+function card(label,value,color){return '<div class="value"'+(label==='Hipotenusa'?' data-radius-toggle tabindex="0" role="button" aria-controls="radius-control" aria-expanded="'+!document.getElementById('radius-control').hidden+'" aria-label="Mostrar u ocultar deslizador de hipotenusa con doble clic"':'')+'><dt'+(color?' style="color:'+color+'"':'')+'>'+label+'</dt><dd>'+value+'</dd></div>';}
 function refresh(){
 functions.forEach(function(f){f.point.setAttribute({visible:f.check.checked&&Number.isFinite(f.fn(theta()))});});
 document.getElementById('angle-value').textContent=Number(angle.value).toFixed(1)+'°   ·   '+theta().toFixed(3)+' rad';
 document.getElementById('radius-value').textContent=r().toFixed(2);
-document.getElementById('lengths').innerHTML=card('Cateto a',format(Math.abs(r()*Math.cos(theta()))),'#245fbd')+card('Cateto b',format(Math.abs(r()*Math.sin(theta()))),'#cc3a24')+card('Hipotenusa c',format(r()));
+document.getElementById('lengths').innerHTML=card('Cateto a',format(Math.abs(r()*Math.cos(theta()))),'#245fbd')+card('Cateto b',format(Math.abs(r()*Math.sin(theta()))),'#cc3a24')+card('Hipotenusa',format(r()));
 document.getElementById('ratios').innerHTML=functions.map(function(f){return card(f.label+' · '+(Number(angle.value)<=90?f.ratio:({sin:'Y/c',cos:'X/c',tan:'Y/X',cot:'X/Y',sec:'c/X',csc:'c/Y'})[f.id]),format(f.fn(theta())),f.color);}).join('');
 
 circle.update();wave.update();
