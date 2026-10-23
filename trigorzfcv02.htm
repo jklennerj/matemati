@@ -165,7 +165,7 @@ s.renderer.updateTextStyle(a,!1),o[3]&&(i.isString(o[3])?(a._jc=new t.JessieCode
 <div id="circle" class="jxgbox" role="img" aria-label="Circunferencia de radio uno y triángulo con catetos a, b e hipotenusa c"></div>
 <div class="control"><label for="angle">Ángulo x <output id="angle-value" for="angle"></output></label><input id="angle" type="range" min="0" max="360" step="0.1" value="40.1"></div>
 <div class="presets" aria-label="Ángulos de referencia"><button data-angle="0">0°</button><button data-angle="30">30°</button><button data-angle="45">45°</button><button data-angle="60">60°</button><button data-angle="90">90°</button><button data-angle="180">180°</button><button data-angle="270">270°</button></div>
-<div class="control"><label for="radius">Hipotenusa c <output id="radius-value" for="radius"></output></label><input id="radius" type="range" min="0.1" max="2" step="0.01" value="1"></div>
+<div class="control" id="radius-control" hidden><label for="radius">Hipotenusa c <output id="radius-value" for="radius"></output></label><input id="radius" type="range" min="0.1" max="2" step="0.01" value="1"></div>
 <button id="reset">Reiniciar</button>
 </section>
 <div class="stack">
@@ -224,7 +224,7 @@ f.point=wave.create('point',[theta,function(){return f.fn(theta());}],{name:'',f
 check.addEventListener('change',function(){f.elements.forEach(function(e){e.setAttribute({visible:check.checked});});f.point.setAttribute({visible:check.checked&&Number.isFinite(f.fn(theta()))});wave.update();});
 });
 function format(v){return Number.isFinite(v)?clean(v).toFixed(3):'No definida';}
-function card(label,value,color){return '<div class="value"><dt'+(color?' style="color:'+color+'"':'')+'>'+label+'</dt><dd>'+value+'</dd></div>';}
+function card(label,value,color){return '<div class="value"'+(label==='Hipotenusa c'?' data-radius-toggle tabindex="0" role="button" aria-controls="radius-control" aria-expanded="'+!document.getElementById('radius-control').hidden+'" aria-label="Mostrar u ocultar deslizador de hipotenusa con doble clic"':'')+'><dt'+(color?' style="color:'+color+'"':'')+'>'+label+'</dt><dd>'+value+'</dd></div>';}
 function refresh(){
 functions.forEach(function(f){f.point.setAttribute({visible:f.check.checked&&Number.isFinite(f.fn(theta()))});});
 document.getElementById('angle-value').textContent=Number(angle.value).toFixed(1)+'° · '+theta().toFixed(3)+' rad';
@@ -235,8 +235,12 @@ document.getElementById('ratios').innerHTML=functions.map(function(f){return car
 circle.update();wave.update();
 }
 angle.addEventListener('input',refresh);radius.addEventListener('input',refresh);
+function toggleRadius(){var control=document.getElementById('radius-control');control.hidden=!control.hidden;var trigger=document.querySelector('[data-radius-toggle]');if(trigger)trigger.setAttribute('aria-expanded',String(!control.hidden));}
+document.getElementById('lengths').addEventListener('dblclick',function(event){if(event.target.closest('[data-radius-toggle]')){event.preventDefault();toggleRadius();}});
+document.getElementById('lengths').addEventListener('keydown',function(event){if(event.target.closest('[data-radius-toggle]')&&(event.key==='Enter'||event.key===' ')){event.preventDefault();toggleRadius();}});
+
 document.querySelectorAll('[data-angle]').forEach(function(b){b.addEventListener('click',function(){angle.value=b.dataset.angle;refresh();});});
-document.getElementById('reset').addEventListener('click',function(){angle.value='40.1';radius.value='1';functions.forEach(function(f,i){f.check.checked=i<2;f.check.dispatchEvent(new Event('change'));});refresh();});
+document.getElementById('reset').addEventListener('click',function(){angle.value='40.1';radius.value='1';document.getElementById('radius-control').hidden=true;functions.forEach(function(f,i){f.check.checked=i<2;f.check.dispatchEvent(new Event('change'));});refresh();});
 function resize(){[circle,wave].forEach(function(b){var el=document.getElementById(b.container);b.resizeContainer(el.clientWidth,el.clientHeight,true);b.setBoundingBox(b===circle?[-2.5,2.5,2.5,-2.5]:[-0.4,3.4,2*Math.PI+0.45,-3.4],b===circle);b.fullUpdate();});}
 window.addEventListener('resize',resize);if(window.ResizeObserver){var observer=new ResizeObserver(resize);observer.observe(document.getElementById('circle'));observer.observe(document.getElementById('wave'));}
 refresh();resize();
