@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gráficos JSXGraph</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+        }
+
+        body {
+            padding: 20px;
+            background-color: #f5f7fa;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .contenedor {
+            width: min(1200px, 100%);
+            margin: 0 auto;
+        }
+
+        .panel-graficos {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .columna-secundaria {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tarjeta {
+            min-width: 0;
+            padding: 12px;
+            background-color: #ffffff;
+            border: 1px solid #dbe2ea;
+            border-radius: 12px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .jxgbox {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        #box {
+            height: 600px;
+        }
+
+        #box2,
+        #box3 {
+            height: 285px;
+        }
+
+        @media (max-width: 850px) {
+            body {
+                padding: 12px;
+            }
+
+            .panel-graficos {
+                grid-template-columns: 1fr;
+            }
+
+            .columna-secundaria {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+
+            #box {
+                height: 520px;
+            }
+
+            #box2,
+            #box3 {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+
+            .tarjeta {
+                padding: 8px;
+                border-radius: 9px;
+            }
+
+            .columna-secundaria {
+                grid-template-columns: 1fr;
+            }
+
+            #box {
+                height: 480px;
+            }
+
+            #box2,
+            #box3 {
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <section class="panel-graficos">
+
+            <div class="tarjeta">
+                <div id="box" class="jxgbox"></div>
+            </div>
+
+            <div class="columna-secundaria">
+
+                <div class="tarjeta">
+                    <div id="box2" class="jxgbox"></div>
+                </div>
+
+                <div class="tarjeta">
+                    <div id="box3" class="jxgbox"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const board = JXG.JSXGraph.initBoard("box", {
+                boundingbox: [-10, 10, 10, -10],
+                axis: true,
+                showCopyright: false,
+                showNavigation: false,
+                keepAspectRatio: false,
+                pan: {
+                    enabled: false
+                },
+                zoom: {
+                    enabled: false
+                }
+            });
+
+            const board2 = JXG.JSXGraph.initBoard("box2", {
+                boundingbox: [-10, 10, 10, -10],
+                axis: true,
+                showCopyright: false,
+                showNavigation: false,
+                keepAspectRatio: false,
+                pan: {
+                    enabled: false
+                },
+                zoom: {
+                    enabled: false
+                }
+            });
+
+            const board3 = JXG.JSXGraph.initBoard("box3", {
+                boundingbox: [-10, 10, 10, -10],
+                axis: true,
+                showCopyright: false,
+                showNavigation: false,
+                keepAspectRatio: false,
+                pan: {
+                    enabled: false
+                },
+                zoom: {
+                    enabled: false
+                }
+            });
+
+            const a = board.create(
+                "slider",
+                [[-7, -5], [7, -5], [-1, 0, 1]],
+                {
+                    name: "a",
+                    snapWidth: 0.01,
+                    precision: 2
+                }
+            );
+
+            const b = board.create(
+                "slider",
+                [[-7, -7], [7, -7], [0, 100, 1000]],
+                {
+                    name: "b",
+                    snapWidth: 1,
+                    precision: 0
+                }
+            );
+
+            const c = board.create(
+                "slider",
+                [[-7, -9], [7, -9], [0, 1, 5]],
+                {
+                    name: "c",
+                    snapWidth: 0.1,
+                    precision: 1
+                }
+            );
+
+            /*
+             * Función principal:
+             *
+             * h(x) = e^(ax) · c · sen((b/100)x)
+             */
+            board.create(
+                "functiongraph",
+                [
+                    function (x) {
+                        return (
+                            Math.exp(a.Value() * x) *
+                            c.Value() *
+                            Math.sin((b.Value() / 100) * x)
+                        );
+                    }
+                ],
+                {
+                    strokeWidth: 3
+                }
+            );
+
+            /*
+             * Función exponencial:
+             *
+             * f(x) = e^(ax)
+             */
+            board2.create(
+                "functiongraph",
+                [
+                    function (x) {
+                        return Math.exp(a.Value() * x);
+                    }
+                ],
+                {
+                    strokeWidth: 3,
+                    strokeColor: "blue"
+                }
+            );
+
+            /*
+             * Función sinusoidal:
+             *
+             * g(x) = c · sen((b/100)x)
+             */
+            board3.create(
+                "functiongraph",
+                [
+                    function (x) {
+                        return (
+                            c.Value() *
+                            Math.sin((b.Value() / 100) * x)
+                        );
+                    }
+                ],
+                {
+                    strokeWidth: 3,
+                    strokeColor: "red"
+                }
+            );
+
+            /*
+             * Los gráficos secundarios dependen de los sliders
+             * ubicados en el gráfico principal.
+             */
+            board.addChild(board2);
+            board.addChild(board3);
+
+            function redimensionarGraficos() {
+                const graficos = [
+                    {
+                        id: "box",
+                        tablero: board
+                    },
+                    {
+                        id: "box2",
+                        tablero: board2
+                    },
+                    {
+                        id: "box3",
+                        tablero: board3
+                    }
+                ];
+
+                graficos.forEach(function (grafico) {
+                    const contenedor = document.getElementById(grafico.id);
+
+                    grafico.tablero.resizeContainer(
+                        contenedor.clientWidth,
+                        contenedor.clientHeight
+                    );
+
+                    grafico.tablero.fullUpdate();
+                });
+            }
+
+            window.addEventListener("resize", redimensionarGraficos);
+
+            setTimeout(redimensionarGraficos, 100);
+        });
+    </script>
+</body>
+</html>
