@@ -223,6 +223,10 @@ input[type=checkbox]{accent-color:#087e85;width:16px;height:16px;vertical-align:
         {
             text: 'Mueva los deslizadores para que la curva azul toque simultáneamente las rectas y=2 e y=-1',
             heights: [2, -1]
+        },
+        {
+            text: 'Mueva la curva azul de tal manera que corte dos veces a la curva roja',
+            heights: null
         }
     ];
     let challengeStep = 0;
@@ -239,9 +243,9 @@ input[type=checkbox]{accent-color:#087e85;width:16px;height:16px;vertical-align:
     document.getElementById('challenge-area').addEventListener('dblclick', function (event) {
         event.preventDefault();
         const challenge = challenges[Math.min(challengeStep, challenges.length - 1)];
-        boundaryHeights = challenge.heights;
+        if (challenge.heights) boundaryHeights = challenge.heights;
         challengeDialog.querySelector('p').textContent = challenge.text;
-        boundaryLines.forEach(function (line) {line.setAttribute({visible: true});});
+        boundaryLines.forEach(function (line) {line.setAttribute({visible: !!challenge.heights});});
         graph.fullUpdate();
         challengeDialog.hidden = false;
         challengeDialog.focus({preventScroll: true});
