@@ -156,7 +156,7 @@ s.renderer.updateTextStyle(a,!1),o[3]&&(i.isString(o[3])?(a._jc=new t.JessieCode
 *{box-sizing:border-box}
 body{margin:0;background:#f3f5f7;color:#172c40;font:16px system-ui,sans-serif}
 main{max-width:1280px;margin:auto;padding:30px 24px}
-header{margin-bottom:24px}h1{font-size:clamp(24px,3vw,34px);margin:8px 0}
+header{margin-bottom:24px}#activity-title{cursor:pointer;user-select:none}#activity-title:focus-visible{outline:3px solid #15a7a0;outline-offset:4px}#activity-question{color:#526578;line-height:1.6;margin:12px 0 0}h1{font-size:clamp(24px,3vw,34px);margin:8px 0}
 .layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:20px;align-items:start}
 .panel{background:#fff;border:1px solid #dae2e9;border-radius:18px;padding:20px;overflow:hidden;min-width:0}
 .jxgbox{border:0;background:#fff;touch-action:none;width:100%}
@@ -172,7 +172,7 @@ button:hover{background:#dff2f0}button:focus-visible{outline:3px solid #15a7a0;o
 </head>
 <body>
 <main>
-<header><h1>Actividad 2</h1></header>
+<header><h1 id="activity-title" role="button" tabindex="0" aria-controls="activity-question" aria-expanded="false">Actividad 2</h1><p id="activity-question" hidden>¿Qué relación existe entre las tres gráficas?</p></header>
 <div class="layout">
 <section class="panel" aria-label="Controles de las ondas">
 <div id="controls" class="jxgbox" aria-label="Deslizadores de amplitud y frecuencia de las dos ondas"></div>
@@ -190,6 +190,18 @@ button:hover{background:#dff2f0}button:focus-visible{outline:3px solid #15a7a0;o
 <script>
 (function () {
     'use strict';
+    const activityTitle = document.getElementById('activity-title');
+    function revealQuestion() {
+        document.getElementById('activity-question').hidden = false;
+        activityTitle.setAttribute('aria-expanded', 'true');
+    }
+    activityTitle.addEventListener('click', revealQuestion);
+    activityTitle.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            revealQuestion();
+        }
+    });
     const shared = {
         axis: false, showCopyright: false, showNavigation: false,
         pan: {enabled: false}, zoom: {enabled: false}
